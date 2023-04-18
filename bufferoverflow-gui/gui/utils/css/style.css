@@ -1,0 +1,47 @@
+.bg-color {
+    background-color: #000000;
+}
+
+.mainHeader {
+    margin-left: 65px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #1a2d59;
+}
+
+.labels {
+    color: #fff;
+    font-size: 16px;
+}
+
+.inputs:focus {
+    background-color: #09203f;
+    border: 1px solid #000;
+    transition: all 0.2s ease-in;
+}
+
+.finish-button {
+    transition: all 0.3s ease-in;
+    border-radius: 9px;
+    background: #00082a;
+    font-weight: bold;
+    color: #2b4089;
+}
+
+.finish-button:hover {
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.minButtons {
+    border-radius: 5px;
+    color: #7b7b7b;
+    background: #2e2e2e;
+    transition: all 0.4s ease-in;
+    border-bottom: 3px solid #1a2d59;
+}
+
+.minButtons:hover {
+    color: #fff;
+    border: 1px solid #fff;
+}
