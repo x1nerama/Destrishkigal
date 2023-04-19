@@ -5,12 +5,23 @@ from gi.repository import Gtk, Gdk, GLib, Vte
 lib_path = os.path.abspath("../src")
 os.environ["LD_LIBRARY_PATH"] = f"{os.getenv('LD_LIBRARY_PATH', '')}:{lib_path}"
 class bufferGUI(Gtk.Window):
+    def error_dialog(title, message):
+        dialog = Gtk.MessageDialog(
+            transient_for=None,
+            flags=0,
+            message_type=Gtk.MessageType.ERROR,
+            buttons=Gtk.ButtonsType.OK,
+            text=title
+        )
+        dialog.format_secondary_text(message)
+        dialog.run()
+        dialog.destroy()
     def __init__(self):
         Gtk.Window.__init__(self, title="Bufferoverflow GUI")
         self.set_default_size(580, 380)
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
-
+        
         # Enable CSS Provider
         cssProvider = Gtk.CssProvider()
         cssProvider.load_from_path("utils/css/style.css")
@@ -32,7 +43,7 @@ class bufferGUI(Gtk.Window):
         # Author Label
         self.author = Gtk.Label(label="github.com/devtbenoth")
         self.author.get_style_context().add_class("labels")
-        fixed.put(self.author, 5, 380)
+        fixed.put(self.author, 400, 5)
 
         # Main Label
         self.mLabel = Gtk.Label()
@@ -45,8 +56,8 @@ class bufferGUI(Gtk.Window):
         self.ipLabel.get_style_context().add_class("labels")
         fixed.put(self.ipLabel, 100, 110)
 
-        # ip Textbox
         self.ipBox = Gtk.Entry()
+        self.ipBox.set_max_length(16)
         self.ipBox.get_style_context().add_class("inputs")
         self.ipBox.set_size_request(200, 1)
         fixed.put(self.ipBox, 50, 140)
@@ -91,42 +102,56 @@ class bufferGUI(Gtk.Window):
         finButton.set_size_request(110, 40)
         fixed.put(finButton, 223, 280)
 
-        # create the terminal widget
-        terminal = Vte.Terminal()
+        # IP Address Result Label
+        self.ipAddress = Gtk.Label(label="IP ADDRESS: ")
+        self.ipAddress.get_style_context().add_class("topSmallLabels")
+        fixed.put(self.ipAddress, 12, 5)
+        
+        # Port Result Label
+        self.resultPortLabel = Gtk.Label(label="PORT: ")
+        self.resultPortLabel.get_style_context().add_class("topSmallLabels")
+        fixed.put(self.resultPortLabel, 12, 28)
 
-        # set the size of the terminal widget
-        terminal.set_size(800, 600)
+        # Result Buffer Size Label
+        self.bufferSizeLabel = Gtk.Label(label="Buffer Size: ")
+        self.bufferSizeLabel.get_style_context().add_class("bottomSmallLabels")
+        fixed.put(self.bufferSizeLabel, 410, 340)
 
-        # create a box to hold the terminal widget
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        box.pack_end(terminal, True, True, 0)
-
-        # add the box to the window
-        self.add(box)
-
-        # position the terminal widget at the bottom of the window
-        self.set_size_request(800, 800)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_resizable(True)
-        self.connect("destroy", Gtk.main_quit)
-
-        # launch a terminal program inside the widget
-        pid, _, _ = GLib.spawn_async(
-            ["/bin/bash"],
-            flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-            standard_output=None,
-            standard_error=None,
-        )
-        terminal.set_pty(Vte.Pty.new_foreign_sync(pid))
         self.show_all()
     def on_button_clicked(self, widget):
         ipAddress = self.ipBox.get_text()
+        if len(ipAddress) > 12:
+            dialog = Gtk.MessageDialog(
+                transient_for=self,
+                flags=0,
+                message_type=Gtk.MessageType.ERROR,
+                buttons=Gtk.ButtonsType.OK,
+                text="ERROR",
+            )
+            dialog.format_secondary_text("IP adresi 12 karakterden fazla olamaz.")
+            dialog.run()
+            dialog.destroy()
+        self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
         portNo = self.portBox.get_text()
+        if len(portNo) >= 10:
+            portDialog = Gtk.MessageDialog(
+                transient_for=self,
+                flags=0,
+                message_type=Gtk.MessageType.ERROR,
+                buttons=Gtk.ButtonsType.OK,
+                text="ERROR"
+            )
+            portDialog.format_secondary_text("Port Input Cannot be More Than 10 Characters!")
+            portDialog.run()
+            portDialog.destroy()
+        self.resultPortLabel.set_text("PORT: " + portNo)
         vulnName = self.vuln.get_text()
         bufferSize = self.bufferSizeText.get_text()
+
         p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(vulnName)], stdout=subprocess.PIPE)
         out, err = p.communicate()
-        print(out.decode())
+        buffer_size_str = out.decode().strip()
+        self.bufferSizeLabel.set_text("Buffer Size: " + buffer_size_str)
 
 def main():
     win = bufferGUI()
