@@ -5,20 +5,21 @@ from gi.repository import Gtk, Gdk, GLib, Vte
 lib_path = os.path.abspath("../src")
 os.environ["LD_LIBRARY_PATH"] = f"{os.getenv('LD_LIBRARY_PATH', '')}:{lib_path}"
 class bufferGUI(Gtk.Window):
-    def error_dialog(title, message):
-        dialog = Gtk.MessageDialog(
+    def errorMsg(titleMsg, errorHeader):
+        errorDialog = Gtk.MessageDialog(
             transient_for=None,
             flags=0,
             message_type=Gtk.MessageType.ERROR,
             buttons=Gtk.ButtonsType.OK,
-            text=title
+            text=errorHeader
         )
-        dialog.format_secondary_text(message)
-        dialog.run()
-        dialog.destroy()
+        errorDialog.format_secondary_text(titleMsg)
+        errorDialog.run()
+        errorDialog.destroy()
+
     def __init__(self):
         Gtk.Window.__init__(self, title="Bufferoverflow GUI")
-        self.set_default_size(580, 380)
+        self.set_default_size(580, 400)
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
         
@@ -94,61 +95,61 @@ class bufferGUI(Gtk.Window):
         self.bufferSizeText.get_style_context().add_class("inputs")
         self.bufferSizeText.set_size_request(200, 1)
         fixed.put(self.bufferSizeText, 300, 225)
+        
+        # Loop Label
+        self.bufferSizeLabel = Gtk.Label(label="Loop [Y/N]")
+        self.bufferSizeLabel.get_style_context().add_class("labels")
+        fixed.put(self.bufferSizeLabel, 238, 271)
+
+        # Loop Textbox
+        self.loopBox = Gtk.Entry()
+        self.loopBox.get_style_context().add_class("inputs")
+        self.loopBox.set_size_request(200, 1)
+        fixed.put(self.loopBox, 178, 295)
 
         # Finish Button
         finButton = Gtk.Button(label="GO BUFF!")
         finButton.get_style_context().add_class("finish-button")
         finButton.connect("clicked", self.on_button_clicked)
         finButton.set_size_request(110, 40)
-        fixed.put(finButton, 223, 280)
+        fixed.put(finButton, 223, 340)
 
         # IP Address Result Label
         self.ipAddress = Gtk.Label(label="IP ADDRESS: ")
         self.ipAddress.get_style_context().add_class("topSmallLabels")
-        fixed.put(self.ipAddress, 12, 5)
+        fixed.put(self.ipAddress, 5, 380)
         
         # Port Result Label
         self.resultPortLabel = Gtk.Label(label="PORT: ")
         self.resultPortLabel.get_style_context().add_class("topSmallLabels")
-        fixed.put(self.resultPortLabel, 12, 28)
+        fixed.put(self.resultPortLabel, 5, 400)
 
         # Result Buffer Size Label
         self.bufferSizeLabel = Gtk.Label(label="Buffer Size: ")
         self.bufferSizeLabel.get_style_context().add_class("bottomSmallLabels")
-        fixed.put(self.bufferSizeLabel, 410, 340)
+        fixed.put(self.bufferSizeLabel, 400, 370)
 
         self.show_all()
     def on_button_clicked(self, widget):
         ipAddress = self.ipBox.get_text()
-        if len(ipAddress) > 12:
-            dialog = Gtk.MessageDialog(
-                transient_for=self,
-                flags=0,
-                message_type=Gtk.MessageType.ERROR,
-                buttons=Gtk.ButtonsType.OK,
-                text="ERROR",
-            )
-            dialog.format_secondary_text("IP adresi 12 karakterden fazla olamaz.")
-            dialog.run()
-            dialog.destroy()
-        self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
+        if len(ipAddress) >= 14:
+           bufferGUI.errorMsg("IP Address Input cannot be more than 14 characters!", "ERROR")
+           return False
+        else:
+            self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
         portNo = self.portBox.get_text()
         if len(portNo) >= 10:
-            portDialog = Gtk.MessageDialog(
-                transient_for=self,
-                flags=0,
-                message_type=Gtk.MessageType.ERROR,
-                buttons=Gtk.ButtonsType.OK,
-                text="ERROR"
-            )
-            portDialog.format_secondary_text("Port Input Cannot be More Than 10 Characters!")
-            portDialog.run()
-            portDialog.destroy()
-        self.resultPortLabel.set_text("PORT: " + portNo)
+            bufferGUI.errorMsg("Port Input Cannot be More Than 10 Characters!", "ERROR")
+            return False
+        else:
+            self.resultPortLabel.set_text("PORT: " + portNo)
         vulnName = self.vuln.get_text()
+        programLoop = self.loopBox.get_text()
         bufferSize = self.bufferSizeText.get_text()
-
-        p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(vulnName)], stdout=subprocess.PIPE)
+        if programLoop != "Y" and programLoop != "N":
+            bufferGUI.errorMsg("Please enter the input as Y or N!", "ERROR")
+            return False
+        p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(programLoop), str(vulnName)], stdout=subprocess.PIPE)
         out, err = p.communicate()
         buffer_size_str = out.decode().strip()
         self.bufferSizeLabel.set_text("Buffer Size: " + buffer_size_str)
