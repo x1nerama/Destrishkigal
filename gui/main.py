@@ -22,6 +22,7 @@ class bufferGUI(Gtk.Window):
         self.set_default_size(580, 400)
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
+        self.loopOption = "n"
         
         # Enable CSS Provider
         cssProvider = Gtk.CssProvider()
@@ -133,16 +134,37 @@ class bufferGUI(Gtk.Window):
 
         self.show_all()
         
-    def on_button_clicked(self, widget):
-        loopActive = False
-        if self.yesRadio.get_active():
-            loopActive = True
+    def on_radio_toggled(self, button, name):
+        if name == "y":
+            self.loopOption = "y"
         else:
-           loopActive = False
+            self.loopOption = "n"
+        
+    def on_button_clicked(self, widget):
+        ipAddress = self.ipBox.get_text()
+        if len(ipAddress) >= 14:
+            bufferGUI.errorMsg("IP Address Input cannot be more than 14 characters!", "ERROR")
+            return False 
+        else:
+            self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
+        
+        portNo = self.portBox.get_text()
+        if len(portNo) >= 10:
+            bufferGUI.errorMsg("Port Input cannot be more than 10 characters!", "ERROR")
+            return False 
+        else:
+            self.resultPortLabel.set_text("PORT: " + portNo)
+        
+        vulnName = self.vuln.get_text()
+        bufferSize = self.bufferSizeText.get_text()
+        
+        p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(self.loopOption), str(vulnName)], stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        buffer_size_str = out.decode().strip()
+        self.bufferSizeLabel.set_text("Buffer Size: " + buffer_size_str)
+        print(self.loopOption)
 
-def main():
-    win = bufferGUI()
-    Gtk.main()
-
-if __name__ == "__main__":
-    main()
+win = bufferGUI()
+win.connect("destroy", Gtk.main_quit)
+win.show_all()
+Gtk.main()
