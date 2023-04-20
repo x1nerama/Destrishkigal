@@ -101,7 +101,20 @@ class bufferGUI(Gtk.Window):
         finButton.get_style_context().add_class("finish-button")
         finButton.connect("clicked", self.on_button_clicked)
         finButton.set_size_request(110, 40)
-        fixed.put(finButton, 223, 290)
+        fixed.put(finButton, 223, 340)
+
+        # Loop Label
+        self.loopLabel = Gtk.Label(label="LOOP")
+        self.loopLabel.get_style_context().add_class("labels")
+        fixed.put(self.loopLabel, 100, 280)
+
+        self.yesRadio = Gtk.RadioButton.new_with_label_from_widget(None, "Yes")
+        self.yesRadio.connect("toggled", self.on_radio_toggled, "y")
+        fixed.put(self.yesRadio, 96, 302)
+
+        self.noRadio = Gtk.RadioButton.new_with_label_from_widget(self.yesRadio, "No")
+        self.noRadio.connect("toggled", self.on_radio_toggled, "n")
+        fixed.put(self.noRadio, 96, 325)
 
         # IP Address Result Label
         self.ipAddress = Gtk.Label(label="IP ADDRESS: ")
@@ -119,25 +132,13 @@ class bufferGUI(Gtk.Window):
         fixed.put(self.bufferSizeLabel, 400, 370)
 
         self.show_all()
+        
     def on_button_clicked(self, widget):
-        ipAddress = self.ipBox.get_text()
-        if len(ipAddress) >= 14:
-           bufferGUI.errorMsg("IP Address Input cannot be more than 14 characters!", "ERROR")
-           return False
+        loopActive = False
+        if self.yesRadio.get_active():
+            loopActive = True
         else:
-            self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
-        portNo = self.portBox.get_text()
-        if len(portNo) >= 10:
-            bufferGUI.errorMsg("Port Input Cannot be More Than 10 Characters!", "ERROR")
-            return False
-        else:
-            self.resultPortLabel.set_text("PORT: " + portNo)
-        vulnName = self.vuln.get_text()
-        bufferSize = self.bufferSizeText.get_text()
-        p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(vulnName)], stdout=subprocess.PIPE)
-        out, err = p.communicate()
-        buffer_size_str = out.decode().strip()
-        self.bufferSizeLabel.set_text("Buffer Size: " + buffer_size_str)
+           loopActive = False
 
 def main():
     win = bufferGUI()
