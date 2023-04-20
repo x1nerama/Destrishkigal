@@ -95,24 +95,13 @@ class bufferGUI(Gtk.Window):
         self.bufferSizeText.get_style_context().add_class("inputs")
         self.bufferSizeText.set_size_request(200, 1)
         fixed.put(self.bufferSizeText, 300, 225)
-        
-        # Loop Label
-        self.bufferSizeLabel = Gtk.Label(label="Loop [Y/N]")
-        self.bufferSizeLabel.get_style_context().add_class("labels")
-        fixed.put(self.bufferSizeLabel, 238, 271)
-
-        # Loop Textbox
-        self.loopBox = Gtk.Entry()
-        self.loopBox.get_style_context().add_class("inputs")
-        self.loopBox.set_size_request(200, 1)
-        fixed.put(self.loopBox, 178, 295)
 
         # Finish Button
         finButton = Gtk.Button(label="GO BUFF!")
         finButton.get_style_context().add_class("finish-button")
         finButton.connect("clicked", self.on_button_clicked)
         finButton.set_size_request(110, 40)
-        fixed.put(finButton, 223, 340)
+        fixed.put(finButton, 223, 290)
 
         # IP Address Result Label
         self.ipAddress = Gtk.Label(label="IP ADDRESS: ")
@@ -144,12 +133,8 @@ class bufferGUI(Gtk.Window):
         else:
             self.resultPortLabel.set_text("PORT: " + portNo)
         vulnName = self.vuln.get_text()
-        programLoop = self.loopBox.get_text()
         bufferSize = self.bufferSizeText.get_text()
-        if programLoop != "Y" and programLoop != "N":
-            bufferGUI.errorMsg("Please enter the input as Y or N!", "ERROR")
-            return False
-        p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(programLoop), str(vulnName)], stdout=subprocess.PIPE)
+        p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(vulnName)], stdout=subprocess.PIPE)
         out, err = p.communicate()
         buffer_size_str = out.decode().strip()
         self.bufferSizeLabel.set_text("Buffer Size: " + buffer_size_str)
