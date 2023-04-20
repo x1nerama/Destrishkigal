@@ -4,6 +4,7 @@ gi.require_version('Vte', '2.91')
 from gi.repository import Gtk, Gdk, GLib, Vte
 lib_path = os.path.abspath("../src")
 os.environ["LD_LIBRARY_PATH"] = f"{os.getenv('LD_LIBRARY_PATH', '')}:{lib_path}"
+
 class bufferGUI(Gtk.Window):
     def errorMsg(titleMsg, errorHeader):
         errorDialog = Gtk.MessageDialog(
@@ -22,7 +23,7 @@ class bufferGUI(Gtk.Window):
         self.set_default_size(580, 400)
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
-        self.loopOption = "n"
+        self.loopOption = "y"
         
         # Enable CSS Provider
         cssProvider = Gtk.CssProvider()
@@ -162,7 +163,10 @@ class bufferGUI(Gtk.Window):
         out, err = p.communicate()
         buffer_size_str = out.decode().strip()
         self.bufferSizeLabel.set_text("Buffer Size: " + buffer_size_str)
-        print(self.loopOption)
+        if self.loopOption == "y":
+            print("Loop Option: YES")
+        else:
+            print("Loop Option: NO")
 
 win = bufferGUI()
 win.connect("destroy", Gtk.main_quit)
