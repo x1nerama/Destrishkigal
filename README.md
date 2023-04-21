@@ -19,18 +19,14 @@
 ```sh
 sudo apt-get install libgtk-3-dev python3-dev libcario2-dev python3-gi gir1.2-gtk-3.0 libgirepository1.0-dev
 ```` 
-<br>
 
-
-<h4> Fedora </h4>
+<h3> Fedora </h3>
 
 ```sh
 sudo dnf install python3-gobject gtk3-devel gobject-introspection-devel cairo-devel
 ```
-<br>
 
-
-<h4> Arch Linux </h4>
+<h3> Arch Linux </h3>
 
 ```sh
 sudo pacman -S python-gobject gtk3 gobject-introspection cairo
