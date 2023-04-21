@@ -1,4 +1,16 @@
 <div align="center">
+    <h1> Description About Project License </h1>
+</div>
+
+<p>
+    This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. All materials distributed with this   license are for educational purposes. We would like to remind individuals who will use real scenarios that they do so at their own responsibility.
+
+This license allows for many actions, including copying, distributing, displaying, performing, creating derivatives, and using the work for non-commercial purposes. However, these actions can only be carried out under the condition that the original source is attributed and the work is shared under the same license.
+
+For more information, please visit http://creativecommons.org/licenses/by-nc-sa/4.0/.
+</p>
+
+<div align="center">
     <h1> 0x0MemDestruX - 0x0MDX </h1>
 </div>
 
