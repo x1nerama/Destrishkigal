@@ -1,9 +1,12 @@
 import gi, subprocess, os
+
 gi.require_version('Gtk', '3.0')
 gi.require_version('Vte', '2.91')
 from gi.repository import Gtk, Gdk, GLib, Vte
+
 lib_path = os.path.abspath("../src")
 os.environ["LD_LIBRARY_PATH"] = f"{os.getenv('LD_LIBRARY_PATH', '')}:{lib_path}"
+
 
 class bufferGUI(Gtk.Window):
     def errorMsg(titleMsg, errorHeader):
@@ -19,12 +22,12 @@ class bufferGUI(Gtk.Window):
         errorDialog.destroy()
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Bufferoverflow GUI")
+        Gtk.Window.__init__(self, title="0x0MDX")
         self.set_default_size(580, 400)
         self.set_resizable(False)
         self.connect("destroy", Gtk.main_quit)
         self.loopOption = "y"
-        
+
         # Enable CSS Provider
         cssProvider = Gtk.CssProvider()
         cssProvider.load_from_path("utils/css/style.css")
@@ -50,9 +53,9 @@ class bufferGUI(Gtk.Window):
 
         # Main Label
         self.mLabel = Gtk.Label()
-        self.mLabel.set_markup("<b> BUFFEROVERFLOW GUI </b>")
+        self.mLabel.set_markup("<b> 0x0MemDestruX - 0x0MDX </b>")
         self.mLabel.get_style_context().add_class("mainHeader")
-        fixed.put(self.mLabel, 50, 50)
+        fixed.put(self.mLabel, 20, 50)
 
         # IP Label
         self.ipLabel = Gtk.Label(label="IP ADDRESS")
@@ -75,7 +78,7 @@ class bufferGUI(Gtk.Window):
         self.portBox.get_style_context().add_class("inputs")
         self.portBox.set_size_request(200, 1)
         fixed.put(self.portBox, 300, 140)
-        
+
         # vulnName label
         self.vulnLabel = Gtk.Label(label="VULN NAME (Optional)")
         self.vulnLabel.get_style_context().add_class("labels")
@@ -122,7 +125,7 @@ class bufferGUI(Gtk.Window):
         self.ipAddress = Gtk.Label(label="IP ADDRESS: ")
         self.ipAddress.get_style_context().add_class("topSmallLabels")
         fixed.put(self.ipAddress, 5, 380)
-        
+
         # Port Result Label
         self.resultPortLabel = Gtk.Label(label="PORT: ")
         self.resultPortLabel.get_style_context().add_class("topSmallLabels")
@@ -134,15 +137,20 @@ class bufferGUI(Gtk.Window):
         fixed.put(self.bufferSizeLabel, 400, 370)
 
         self.show_all()
-        
+
     def on_radio_toggled(self, button, name):
         if name == "y":
             self.loopOption = "y"
         else:
             self.loopOption = "n"
-        
+
     def on_button_clicked(self, widget):
         ipAddress = self.ipBox.get_text()
+        portNo = self.portBox.get_text()
+        bufferSize = self.bufferSizeText.get_text()
+        vulnName = self.vuln.get_text()
+
+        # Check for Ip Address Input
         if len(ipAddress) >= 14:
             bufferGUI.errorMsg("IP Address Input cannot be more than 14 characters!", "ERROR")
             return False
@@ -151,29 +159,28 @@ class bufferGUI(Gtk.Window):
             return False
         else:
             self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
-            print("SET IP ADRESS --> " + str(ipAddress))
-        
-        portNo = self.portBox.get_text()
+            print("SET IP ADRESS: " + str(ipAddress))
+
+        # Check for Port Input
         if len(portNo) >= 10:
             bufferGUI.errorMsg("Port Input cannot be more than 10 characters!", "ERROR")
-            return False 
+            return False
         elif len(portNo) == 0:
             bufferGUI.errorMsg("Please Enter the Port Number!", "ERROR")
             return False
         else:
             self.resultPortLabel.set_text("PORT: " + portNo)
-            print("SET PORT --> " + portNo)
-            
-        vulnName = self.vuln.get_text()
-        print("VULN Name --> " + vulnName)
-        
-        bufferSize = self.bufferSizeText.get_text()
+            print("SET PORT: " + portNo)
+
+        print("VULN Name: " + vulnName)
+
+        # Check for Buffer Size Input
         if len(bufferSize) == 0:
             bufferGUI.errorMsg("Please Enter the Buffer Size!", "ERROR")
             return False
         else:
-            print("Buffer Size --> " + bufferSize)
-        
+            print("Buffer Size: " + bufferSize)
+
         p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(self.loopOption), str(vulnName)], stdout=subprocess.PIPE)
         out, err = p.communicate()
         buffer_size_str = out.decode().strip()
@@ -182,6 +189,7 @@ class bufferGUI(Gtk.Window):
             print("Loop Option: YES")
         else:
             print("Loop Option: NO")
+
 
 win = bufferGUI()
 win.connect("destroy", Gtk.main_quit)
