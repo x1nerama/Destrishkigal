@@ -19,19 +19,19 @@
 <h3> Ubuntu </h3>
 
 ```sh
-sudo apt-get install libgtk-3-dev python3-dev libcario2-dev python3-gi gir1.2-gtk-3.0 libgirepository1.0-dev
+sudo apt-get install nasm gcc libgtk-3-dev python3-dev libcario2-dev python3-gi gir1.2-gtk-3.0 libgirepository1.0-dev
 ```` 
 
 <h3> Fedora </h3>
 
 ```sh
-sudo dnf install python3-gobject gtk3-devel gobject-introspection-devel cairo-devel
+sudo dnf install nasm python3-gobject gtk3-devel gobject-introspection-devel cairo-devel
 ```
 
 <h3> Arch Linux </h3>
 
 ```sh
-sudo pacman -S python-gobject gtk3 gobject-introspection cairo
+sudo pacman -S nasm python-gobject gtk3 gobject-introspection cairo
 ```
 
 <p> <b> Now we need to install the pygobject library. You can download it with the following command: </b></p>
@@ -61,3 +61,15 @@ cd 0x0MemDestruX/src && make
 ```shell
 cd ../gui && python3 main.py
 ```
+
+<br>
+
+<h2> More Details About the Project </h2>
+
+<p>
+    I developed the 0x0MDX project using C, Python and Assembly and I still continue to develop it. You can think of the current state as a beta version. In this project, I have listed below what I use programming languages for:
+</p>
+
+<ul>
+    <li> <b> Python --> </b> I created interface environment using pygobject library. With libraries such as subprocess, I provided the connection with the c project. </li>
+</ul>
