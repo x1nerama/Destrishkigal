@@ -71,5 +71,14 @@ cd ../gui && python3 main.py
 </p>
 
 <ul>
-    <li> <b> Python: </b> I created interface environment using pygobject library. With libraries such as subprocess, I provided the connection with the c project. </li>
+    <li> <b> Python: </b> I created interface environment using pygobject library. With libraries such as subprocess, I provided the connection with the c project. </li> <br> 
+    <li> <b> C Language: </b> In C programming, a socket is created with information received through the GUI. Then a buffer is created according to the buffer size entered by the user and sent with the socket.</li> <br> 
+    <li> <b> Assembly: </b> With assembly, a buffer array is created according to the buffer size received from the user. However, if the user has entered any input in the VULN Name part of the program, it creates a buffer array by combining it with it. For example, let's say we enter TRUN in the VULN Name field and 10 in the buffer size. The assembly result will be as follows:</li>
 </ul>
+<center>
+
+```shell
+TRUNAAAAAAAAAA
+```
+
+</center>
