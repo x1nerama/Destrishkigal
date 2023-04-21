@@ -145,19 +145,34 @@ class bufferGUI(Gtk.Window):
         ipAddress = self.ipBox.get_text()
         if len(ipAddress) >= 14:
             bufferGUI.errorMsg("IP Address Input cannot be more than 14 characters!", "ERROR")
-            return False 
+            return False
+        elif len(ipAddress) == 0:
+            bufferGUI.errorMsg("Please Enter the IP ADDRESS!", "ERROR")
+            return False
         else:
             self.ipAddress.set_text("IP ADDRESS: " + ipAddress)
+            print("SET IP ADRESS --> " + str(ipAddress))
         
         portNo = self.portBox.get_text()
         if len(portNo) >= 10:
             bufferGUI.errorMsg("Port Input cannot be more than 10 characters!", "ERROR")
             return False 
+        elif len(portNo) == 0:
+            bufferGUI.errorMsg("Please Enter the Port Number!", "ERROR")
+            return False
         else:
             self.resultPortLabel.set_text("PORT: " + portNo)
-        
+            print("SET PORT --> " + portNo)
+            
         vulnName = self.vuln.get_text()
+        print("VULN Name --> " + vulnName)
+        
         bufferSize = self.bufferSizeText.get_text()
+        if len(bufferSize) == 0:
+            bufferGUI.errorMsg("Please Enter the Buffer Size!", "ERROR")
+            return False
+        else:
+            print("Buffer Size --> " + bufferSize)
         
         p = subprocess.Popen(['../src/program', str(ipAddress), str(portNo), str(bufferSize), str(self.loopOption), str(vulnName)], stdout=subprocess.PIPE)
         out, err = p.communicate()
