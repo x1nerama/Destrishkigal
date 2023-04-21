@@ -71,5 +71,5 @@ cd ../gui && python3 main.py
 </p>
 
 <ul>
-    <li> <b> Python --> </b> I created interface environment using pygobject library. With libraries such as subprocess, I provided the connection with the c project. </li>
+    <li> <b> Python: </b> I created interface environment using pygobject library. With libraries such as subprocess, I provided the connection with the c project. </li>
 </ul>
