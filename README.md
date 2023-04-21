@@ -32,8 +32,6 @@ sudo dnf install python3-gobject gtk3-devel gobject-introspection-devel cairo-de
 sudo pacman -S python-gobject gtk3 gobject-introspection cairo
 ```
 
-<br>
-
 <h2> Compiling and Running the Project</h2>
 
 <p> <b> First, let's clone the project: </b></p>
