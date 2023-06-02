@@ -97,9 +97,3 @@ TRUNAAAAAAAAAA
 
 <br>
 
-<h2> Contact </h2>
-
-<p> If you encounter any problems or want to ask a question, you can contact my information below! </p>
-
-<p> <b> Discord: </b> xinerama#8396 </p>
-<p> <b> Instagram: </b> h3x0mania </p>
