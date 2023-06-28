@@ -16,6 +16,7 @@ char* payloadKey;
 char* lpStart;
 char* lpKey;
 
+/* Message */
 char e[] = "[-]";
 
 char* getValues(const char* valueKey, const char* valueLength, const char* jsonData) {
@@ -73,26 +74,25 @@ int main(int argc, char const *argv[])
         printf("%s%s Failed to get port.%s\n", ERROR_COLOR, e, RESET_COLOR);
     } 
     else {
-        
+        int portInt = atoi(port);
         free(port);
     }
 
     char* payload = getValues(payloadKey, "\",", jsonData);
     if (payload == NULL) {
-        printf("%s%s Failed to get port.%s\n", ERROR_COLOR, e, RESET_COLOR);
+        NULL;
     } 
     else {
-        
         free(payload);
     }
 
-    char* loopCounter = getValues(lpKey, "\",", jsonData);
-    if (loopCounter == NULL) {
-    
+    char* lCounter = getValues(lpKey, "\",", jsonData);
+    if (lCounter == NULL) {
+        printf("%s%s Failed to get Loop Counter.%s\n", ERROR_COLOR, e, RESET_COLOR);
     } 
     else {
-        
-        free(loopCounter);
+        int lCounterInt = atoi(lCounter);
+        free(lCounter);
     }
     fclose(fp);
     free(buffer);
