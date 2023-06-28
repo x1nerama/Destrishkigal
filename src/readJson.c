@@ -11,35 +11,24 @@ char* ipAddressKey;
 char* ipStart; 
 char* portKey;
 char* portStart;
+char* payloadStart;
+char* payloadKey;
+char* lpStart;
+char* lpKey;
 
-/* Message */
 char e[] = "[-]";
 
 char* getValues(const char* valueKey, const char* valueLength, const char* jsonData) {
     const char* valueStart = strstr(jsonData, valueKey);
-    if (valueStart == NULL) {
-        printf("%s%s Value not found.\n", ERROR_COLOR, e);
-        return NULL;
-    } 
-    else {
-        valueStart += strlen(valueKey);
-        const char* valueEnd = strchr(valueStart, '\"');
-        if (valueEnd == NULL) {
-            printf("%s%s Value not found.%s\n", ERROR_COLOR, e, RESET_COLOR);
-            return EXIT_FAILURE;
-        } 
-        else {
-            size_t valueLen = valueEnd - valueStart;
-            if (strlen(valueLength) > valueLen) {
-                printf("%s%s Invalid value length.%s\n", ERROR_COLOR, e, RESET_COLOR);
-                return EXIT_FAILURE;
-            }
-            char* value = (char*)malloc(valueLen + 1);
-            strncpy(value, valueStart, valueLen);
-            value[valueLen] = '\0';
-            return value;
-        }
-    }
+    valueStart += strlen(valueKey);
+    
+    const char* valueEnd = strchr(valueStart, '\"');
+    size_t valueLen = valueEnd - valueStart;
+    char* value = (char*)malloc(valueLen + 1);
+    strncpy(value, valueStart, valueLen);
+    
+    value[valueLen] = '\0';
+    return value;
 }
 
 int main(int argc, char const *argv[])
@@ -67,6 +56,8 @@ int main(int argc, char const *argv[])
     
     ipAddressKey = "\"ipAddress\": \"";
     portKey = "\"port\": \"";
+    payloadKey = "\"payloadName\": \"";
+    lpKey = "\"loopCounter\": \"";
     
     char* ipAddress = getValues(ipAddressKey, "\",", jsonData);
     if (ipAddress == NULL) {
@@ -82,8 +73,26 @@ int main(int argc, char const *argv[])
         printf("%s%s Failed to get port.%s\n", ERROR_COLOR, e, RESET_COLOR);
     } 
     else {
-
+        
         free(port);
+    }
+
+    char* payload = getValues(payloadKey, "\",", jsonData);
+    if (payload == NULL) {
+        printf("%s%s Failed to get port.%s\n", ERROR_COLOR, e, RESET_COLOR);
+    } 
+    else {
+        
+        free(payload);
+    }
+
+    char* loopCounter = getValues(lpKey, "\",", jsonData);
+    if (loopCounter == NULL) {
+    
+    } 
+    else {
+        printf("Loop Counter: %s\n", loopCounter);
+        free(loopCounter);
     }
     fclose(fp);
     free(buffer);
