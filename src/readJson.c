@@ -91,7 +91,7 @@ int main(int argc, char const *argv[])
     
     } 
     else {
-        printf("Loop Counter: %s\n", loopCounter);
+        
         free(loopCounter);
     }
     fclose(fp);
