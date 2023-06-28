@@ -16,7 +16,6 @@ char* payloadKey;
 char* lpStart;
 char* lpKey;
 
-/* Message */
 char e[] = "[-]";
 
 char* getValues(const char* valueKey, const char* valueLength, const char* jsonData) {
@@ -34,7 +33,7 @@ char* getValues(const char* valueKey, const char* valueLength, const char* jsonD
 
 int main(int argc, char const *argv[])
 {
-    FILE* fp = fopen("text.json", "r");
+    FILE* fp = fopen("../backend/data.json", "r");
     if (fp == NULL) {
         printf("%s%s Failed to open JSON file!%s\n", ERROR_COLOR, e, RESET_COLOR);
         return EXIT_FAILURE;
@@ -65,7 +64,6 @@ int main(int argc, char const *argv[])
         printf("%s%s Failed to get ipAddress.%s\n", ERROR_COLOR, e, RESET_COLOR);
     } 
     else {
-        
         free(ipAddress);
     }
     
@@ -83,6 +81,7 @@ int main(int argc, char const *argv[])
         NULL;
     } 
     else {
+        
         free(payload);
     }
 
