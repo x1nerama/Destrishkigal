@@ -14,7 +14,8 @@ def send_variable():
         payload = request.form.get('payload')
         save_to_json(ip, port, loop_counter, payload)
         return render_template('index.html')
-
+    else:
+        return('This is a get requests')
 def save_to_json(ip, port, loop_counter, payload):
     data = [
             {'ip': ip},
@@ -22,7 +23,7 @@ def save_to_json(ip, port, loop_counter, payload):
             {'loop_counter': loop_counter},
             {'payload': payload} 
            ]
-    with open('ip_data.json', 'w') as json_file:
+    with open('../src/data.json', 'w') as json_file:
         json.dump(data, json_file)
 
 if __name__ == '__main__':
