@@ -17,14 +17,14 @@ struct paramsForSocket {
 };
 
 /* Important Variables */
-const char* ipAddressKey;  // const olarak güncelledik
-const char* ipStart;  // const olarak güncelledik
-const char* portKey;  // const olarak güncelledik
-const char* portStart;  // const olarak güncelledik
-const char* payloadStart;  // const olarak güncelledik
-const char* payloadKey;  // const olarak güncelledik
-const char* lpStart;  // const olarak güncelledik
-const char* lpKey;  // const olarak güncelledik
+const char* ipAddressKey;  
+const char* ipStart;  
+const char* portKey;  
+const char* portStart;  
+const char* payloadStart;  
+const char* payloadKey;  
+const char* lpStart;  
+const char* lpKey;  
 
 /* Messages */
 char e[] = "[-]";
