@@ -14,7 +14,7 @@ int main() {
     int loopCounter = pfs.loopCounter;
     int size = 10;
     struct sockaddr_in sock;
-    sock.sin_addr.s_addr = inet_pton(AF_INET, targetIp, &sock.sin_addr);
+    sock.sin_addr.s_addr = inet_addr(targetIp);
     sock.sin_family = AF_INET;
     sock.sin_port = htons(targetPort);
 
@@ -41,9 +41,8 @@ int main() {
         printf("%s\n", bufferMalloc);
         size += 1;
         loopCounter--;
-        sleep(2);
+        sleep(1);
     }
-    
     free(bufferMalloc);
     return EXIT_SUCCESS;
 }
