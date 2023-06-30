@@ -2,36 +2,48 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+
 #define BUFFER 4096
 #define ERROR_COLOR "\e[4;31m"
 #define RESET_COLOR "\e[0;37m"
+#define INFORMATION_COLOR "\e[0;36m"
+#define SUCCESSFUL_COLOR "\e[0;32m"
 
 struct paramsForSocket {
     const char* ipAddress;
-    const char* port; 
+    int port; 
     const char* payload;
-    const char* loopCounter; 
+    int loopCounter; 
 };
 
 /* Important Variables */
-char* ipAddressKey;
-char* ipStart; 
-char* portKey;
-char* portStart;
-char* payloadStart;
-char* payloadKey;
-char* lpStart;
-char* lpKey;
+const char* ipAddressKey;  // const olarak güncelledik
+const char* ipStart;  // const olarak güncelledik
+const char* portKey;  // const olarak güncelledik
+const char* portStart;  // const olarak güncelledik
+const char* payloadStart;  // const olarak güncelledik
+const char* payloadKey;  // const olarak güncelledik
+const char* lpStart;  // const olarak güncelledik
+const char* lpKey;  // const olarak güncelledik
 
-/* Error Message */
+/* Messages */
 char e[] = "[-]";
-
+char s[] = "[+]";
+char i[] = "[*]";
 
 char* getValues(const char* valueKey, const char* valueLength, const char* jsonData) {
     const char* valueStart = strstr(jsonData, valueKey);
+    if (valueStart == NULL) {
+        printf("%s%s Failed to get value!%s\n", ERROR_COLOR, e, RESET_COLOR);
+        return NULL;
+    }
     valueStart += strlen(valueKey);
     
     const char* valueEnd = strchr(valueStart, '\"');
+    if (valueEnd == NULL) {
+        printf("%s%s Invalid value!%s\n", ERROR_COLOR, e, RESET_COLOR);
+        return NULL;
+    }
     size_t valueLen = valueEnd - valueStart;
     char* value = (char*)malloc(valueLen + 1);
     strncpy(value, valueStart, valueLen);
@@ -66,15 +78,21 @@ void readJson(struct paramsForSocket* pfss) {
     portKey = "\"port\": \"";
     payloadKey = "\"payloadName\": \"";
     lpKey = "\"loopCounter\": \"";
-    
+
     char* ipAddress = getValues(ipAddressKey, "\",", jsonData);
+    if (ipAddress == NULL) {
+        printf("%s%s Failed to get IP address.%s\n", ERROR_COLOR, e, RESET_COLOR);
+        fclose(fp);
+        free(buffer);
+        return;
+    }
     pfss->ipAddress = ipAddress;
-    
+
     char* port = getValues(portKey, "\",", jsonData);
     if (port == NULL) {
         printf("%s%s Failed to get port.%s\n", ERROR_COLOR, e, RESET_COLOR);
     } 
-    pfss->port = port;
+    pfss->port = atoi(port);
 
     char* payload = getValues(payloadKey, "\",", jsonData);
     if (payload == NULL) {
@@ -85,8 +103,8 @@ void readJson(struct paramsForSocket* pfss) {
     char* lCounter = getValues(lpKey, "\",", jsonData);
     if (lCounter == NULL) {
         printf("%s%s Failed to get Loop Counter.%s\n", ERROR_COLOR, e, RESET_COLOR);
-    } 
-    pfss->loopCounter = lCounter;
+    }
+    pfss->loopCounter = atoi(lCounter);
     
     fclose(fp);
     free(buffer);
