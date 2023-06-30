@@ -15,12 +15,12 @@ def send_variable():
         save_to_json(ip, port, loop_counter, payload)
         return render_template('index.html')
     else:
-        return('This is a get requests')
+        return render_template('index.html')
 def save_to_json(ip, port, loop_counter, payload):
     data = [
             {'ip': ip},
-            {'port': port},
-            {'loop_counter': loop_counter},
+            {'port': int(port)},
+            {'loop_counter': int(loop_counter)},
             {'payload': payload} 
            ]
     with open('../src/data.json', 'w') as json_file:
