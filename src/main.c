@@ -13,6 +13,7 @@ int main() {
     int targetPort = pfs.port;
     int loopCounter = pfs.loopCounter;
     int size = 10;
+    
     struct sockaddr_in sock;
     sock.sin_addr.s_addr = inet_addr(targetIp);
     sock.sin_family = AF_INET;
@@ -32,14 +33,18 @@ int main() {
     }
     printf("%s%s Connection Server!%s\n", SUCCESSFUL_COLOR, s, RESET_COLOR);
     char* bufferMalloc = (char*)malloc(strlen(payload) + 1);
-    strcpy(bufferMalloc, payload);
-    
+
     while (loopCounter != 0) {
         size_t bufferSize = strlen(bufferMalloc);
         generate_buffer(bufferMalloc, size);
 
-        printf("%s\n", bufferMalloc);
-        size += 1;
+        int wr = write(scket, bufferMalloc, bufferSize);
+        if (wr == -1) {
+            printf("%s%s Yeeeeapp This is BOFFF!%s\n", SUCCESSFUL_COLOR, s, RESET_COLOR);
+            break;
+        }
+        printf("%s%s%zu-Bytes%s\n", INFORMATION_COLOR, i, strlen(bufferMalloc), RESET_COLOR);
+        size += 100;
         loopCounter--;
         sleep(1);
     }
