@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans', sans-serif;
+
+    /* Colors */
+    --background-color-primary: hsl(0, 0%, 9%); 
+    --background-color-secondary: hsl(0, 0%, 8%);
+
+    --foreground-color-primary: hsl(0, 74%, 41%);
+    --foreground-color-secondary: hsl(0, 5%, 13%); 
+
+    --action-color-primary: hsl(0, 0%, 100%);
+
+    /* Animation */
+    transition: all 0.56s ease;
+}
+
+.projectBar {
+    width: 100%;
+    height: 60px;
+    background-color: var(--background-color-primary);
+    color: var(--foreground-color-primary);
+}
+
+.header {
+    line-height: 50px;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.header h2 {
+    font-weight: bold;
+}
+
+.socialMedias {
+    float: right;
+    margin-top: 0.5em;
+    margin-right: 0.8rem;
+    width: 10%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.socialMedias ul {
+    list-style: none;
+ }
+
+.socialMedias ul a {
+    margin-left: 23px;
+    font-size: 30px;
+    color: var(--foreground-color-primary);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0px;
+    width: 20px;
+}
+
+.socialMedias ul a::after {
+    content: '';
+    position: absolute;
+    left: 0%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--action-color-primary);
+    transform: translateX(30%);
+    transition: width 0.2s ease;
+    border-radius: 25px;
+}
+
+.socialMedias ul a:hover::after {
+    width: 100%;
+}
+
+.socialMedias ul a:hover {
+    color: var(--action-color-primary);
+}
+
+.container {
+  height: 93.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background-color: black;
+}
+
+.container .video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(8px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.formBox {
+    width: 36%;
+    height: 53%;
+    background-color: hsl(0, 3%, 12%);
+    opacity: 0.9;
+    border-radius: 10px;
+    z-index: 1;
+    border: 2px solid rgb(27, 27, 27);
+}
+
+.windowBar {
+    width: 100%;
+    height: 45px;
+    border-radius: 10px 10px 0 0;
+    background-color: hsl(0, 12%, 5%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+  position: relative;
+}
+
+.windowBar button {
+  width: 10%;
+  height: 25px;
+  border: none;
+  border-radius: 2px;
+  margin-right: 20px;
+}
+
+#homeBtn {
+    border-radius: 5px;
+    color: hsl(0, 0%, 70%);
+    background-color: hsl(240, 1%, 28%);
+}
+
+.windowBar #line1, #line2 {
+  position: absolute;
+  bottom: 5px;
+  left: 36.5%;
+  height: 2px;
+  background-color: hsl(0, 0%, 39%);
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+.windowBar #line1 {
+    left: 37%;
+}
+
+.windowBar #line2 {
+    left: 50%;
+}
+
+
+.inputs {
+    display: inline-block;
+    width: 40%;
+    height: 10%;
+    margin-top: 2em;
+    margin-bottom: 10px;
+    margin-left: 2em; 
+}
+
+.inputs label {
+    display: block;
+    color: white;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.inputs input {
+    margin-left: 20%;
+    position: relative;
+    padding: 3px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.2s ease;
+    border-radius: 3px;
+    background-color: hsl(257, 8%, 17%);
+    color: hsl(0, 0%, 56%);
+}
+
+.inputs input:focus {
+  outline: none;
+  border-bottom: 2.8px solid hsl(240, 1%, 28%);
+  box-shadow: 0px 10px 20px black;
+  transition: all 0.2s ease;
+}
+
+.inputs input::placeholder {
+    text-align: center;
+    color: hsl(0, 0%, 58%);
+}
+
+#homePage button {
+    width: 13%;
+    height: 35px;
+    margin-top: 3em;
+    margin-left: 43%;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#logPage {
+    display: none;
+}
+
+.logDiv {
+    width: 98%;
+    height: 12em;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color: red;
+    border-radius: 8px;
+}

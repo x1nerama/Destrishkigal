@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="projectBar">
+    <div class="header">
+      <h2> Destrishkigal - Bufferoverflow Project </h2>
+    </div>
+    <div class="socialMedias">
+      <ul>
+        <a href="https://github.com/devTBenoth"> <ion-icon name="logo-github"></ion-icon> </a>
+        <a href="https://instagram.com/h3x0mania"> <ion-icon name="logo-instagram"></ion-icon> </a>
+        <a href="#"> <ion-icon name="logo-linkedin"></ion-icon> </a>
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <video autoplay muted loop class="video">
+      <source src="./assets/video/background-into.mp4" type="video/mp4">
+    </video>
+    <div class="formBox">
+      <div class="windowBar">
+        <button id="homeBtn" class="windowButtons"> Home </button>
+        <div id="line1"></div>
+        <button id="logBtn" class="windowButtons"> Log </button>
+        <div id="line2"></div>
+      </div>
+      <div class="formContent">
+          <div id="homePage">
+            <form action="/">
+              <div class="inputs">
+                <label for="ipAddress"> IP Address </label>
+                <input type="text" name="ipAddress" required placeholder="Enter IP Address">
+              </div>
+              <div class="inputs">
+                <label for="port"> Port Number </label>
+                <input type="text" name="port" required placeholder="Enter Port Number">
+              </div>
+              <div class="inputs">
+                <label for="payloadName"> Payload (Optional)</label>
+                <input type="text" name="payloadName" required placeholder="Enter Payload">
+              </div>
+              <div class="inputs">
+                <label for="loopCounter"> Loop Counter </label>
+                <input type="text" name="loopCounter" required placeholder="Enter Loop Counter">
+              </div>
+              <button type="submit"> GO BOFF! </button>
+            </form>
+          </div>
+        </div>
+          <div id="logPage">
+            <div class="logDiv">
+              denemedd
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>
