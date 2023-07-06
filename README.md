@@ -1,9 +1,9 @@
 <div align="center">
-    <h1> 0x0MemDestruX - 0x0MDX </h1>
+    <h1> Destrishkigal - Destructrix of Ereshkigal </h1>
 </div>
 
 <p div align="justify">
-    <bold> Welcome to my project 0x0MDX! This project is a project that provides an interface for bufferoverflow attacks. </bold>
+    <bold> Welcome to my project! This project is a project that provides an interface for bufferoverflow attacks. </bold>
     <br/> <br/>
     The program performs a buffer overflow attack based on the specified IP address and PORT information. Likewise, the program provides the necessary filters to perform a buffer overflow attack. However, this project is still under development. So I will add many more features in the future.
 </p>
