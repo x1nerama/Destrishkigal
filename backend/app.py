@@ -16,6 +16,7 @@ def send_variable():
         return render_template('index.html')
     else:
         return render_template('index.html')
+
 def save_to_json(ip, port, loop_counter, payload):
     data = [
             {'ip': ip},
